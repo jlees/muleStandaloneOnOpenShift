@@ -1,0 +1,32 @@
+# Get Install
+curl -o ${OPENSHIFT_DATA_DIR}mule-standalone-3.8.1.tar.gz https://repository-master.mulesoft.org/nexus/content/repositories/releases/org/mule/distributions/mule-standalone/3.8.1/mule-standalone-3.8.1.tar.gz
+
+# Unzip
+tar -zxvf ${OPENSHIFT_DATA_DIR}mule-standalone-3.8.1.tar.gz -C ${OPENSHIFT_DATA_DIR}
+
+# Remove wrapper
+rm ${OPENSHIFT_DATA_DIR}mule-standalone-3.8.1/lib/boot/libwrapper-*
+rm ${OPENSHIFT_DATA_DIR}mule-standalone-3.8.1/lib/boot/wrapper-*
+ 
+# Get later version of wrapper
+curl -o ${OPENSHIFT_DATA_DIR}wrapper-delta-pack-3.5.32.tar.gz http://wrapper.tanukisoftware.com/download/3.5.32/wrapper-delta-pack-3.5.32.tar.gz
+    
+# Unzip
+tar -zxvf ${OPENSHIFT_DATA_DIR}wrapper-delta-pack-3.5.32.tar.gz -C ${OPENSHIFT_DATA_DIR}
+
+# Remove Zip
+rm ${OPENSHIFT_DATA_DIR}wrapper-delta-pack-3.5.32.tar.gz
+
+# Copy and replace new wrapper files
+cp ${OPENSHIFT_DATA_DIR}wrapper-delta-pack-3.5.32/lib/libwrapper-* ${OPENSHIFT_DATA_DIR}mule-standalone-3.8.1/lib/boot
+
+cp ${OPENSHIFT_DATA_DIR}wrapper-delta-pack-3.5.32/lib/wrapper.jar ${OPENSHIFT_DATA_DIR}mule-standalone-3.8.1/lib/boot/wrapper-3.5.32.jar
+
+rm ${OPENSHIFT_DATA_DIR}mule-standalone-3.8.1/lib/boot/exec/*
+
+cp ${OPENSHIFT_DATA_DIR}wrapper-delta-pack-3.5.32/bin/wrapper-* ${OPENSHIFT_DATA_DIR}mule-standalone-3.8.1/lib/boot/exec
+
+# Replace wrapper.conf
+rm ${OPENSHIFT_DATA_DIR}mule-standalone-3.8.1/conf/wrapper.conf
+
+cp ${OPENSHIFT_REPO_DIR}wrapper.conf ${OPENSHIFT_DATA_DIR}mule-standalone-3.8.1/conf
