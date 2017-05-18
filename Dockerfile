@@ -23,7 +23,7 @@ RUN yum update -y \
     && rm mule.tar.gz*
 
 # Copy configuration files
-COPY ./conf/* $MULE_HOME/conf/
+#COPY ./conf/* $MULE_HOME/conf/
 
 # Installing license file
 #COPY ./license/license.lic $MULE_HOME/license.lic
