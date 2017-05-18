@@ -39,5 +39,8 @@ RUN chown -R 1001:0 $MULE_HOME && \
 # Openshift runtime user
 USER 1001
 
+# Expose port
+EXPOSE 20443
+
 # engage
 CMD exec $MULE_HOME/bin/mule $MULE_OPTS_APPEND
